@@ -6,30 +6,31 @@ import { AuthContext } from '../contexts/authContext';
 
 export default function Home() {
   const { register, handleSubmit } = useForm();
-  const { auth } = useContext(AuthContext)  
+  const { auth } = useContext(AuthContext)
 
 
-  async function login(data){
-  await auth(data);
+  async function login({ email, password }) {
 
-}
+    await auth({ email, password });
+
+  }
 
   return (
     <div>
       <Head>
-        <title>Home</title>
+        <title>LIA</title>
       </Head>
-
 
       <form onSubmit={handleSubmit(login)}>
         <input type="hidden" name="remember" defaultValue="true" />
         <div>
+
           <div>
             <label htmlFor="email-address">
               Email address
               </label>
             <input
-            {...register('email')}
+              {...register('email')}
               id="email-address"
               name="email"
               type="email"
@@ -38,12 +39,13 @@ export default function Home() {
               placeholder="Email address"
             />
           </div>
+
           <div>
             <label htmlFor="password">
               Password
-              </label>
+            </label>
             <input
-            {...register('password')}
+              {...register('password')}
               id="password"
               name="password"
               type="password"
@@ -52,26 +54,15 @@ export default function Home() {
               placeholder="Password"
             />
           </div>
-        </div>
 
-        <div>
-          <div>
-            <input
-              id="remember_me"
-              name="remember_me"
-              type="checkbox"
-            />
-            <label htmlFor="remember_me">
-              Remember me
-              </label>
-          </div>
         </div>
 
         <div>
           <button type="submit">
-            <span> Sign in </span>
+            <span> Login </span>
           </button>
         </div>
+
       </form>
     </div>
   )

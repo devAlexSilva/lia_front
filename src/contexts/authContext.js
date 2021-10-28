@@ -1,18 +1,18 @@
 import axios from "axios";
 import { createContext, useState } from "react";
-import { setCookie } from 'nookies'
+import { destroyCookie, setCookie } from 'nookies'
 import Router from 'next/router'
 
 export const AuthContext = createContext({})
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState();
-    
-    
+
+
     const authenticate = !!user;
 
-    async function auth({email, password}){
-       const { data: {token, user} } = await axios({
+    async function auth({ email, password }) {
+        const { data: { token, user } } = await axios({
             method: 'POST',
             url: 'http://localhost:4000/login',
             data: {
@@ -28,12 +28,18 @@ export function AuthProvider({ children }) {
 
         setUser(user);
 
-        Router.push('/home');
+        Router.push('/dashboard');
     }
-    
-    return(
-        <AuthContext.Provider value={{ authenticate, auth, user }}>
-      {children}
-    </AuthContext.Provider>
-    ) 
+
+    async function cancelCookie(){
+        destroyCookie(null, 'token-lia');
+
+        Router.push('/');
+    }
+
+    return (
+        <AuthContext.Provider value={{ authenticate, auth, cancelCookie, user }}>
+            {children}
+        </AuthContext.Provider>
+    )
 }
