@@ -2,6 +2,8 @@ import Head from 'next/head'
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form'
 import { AuthContext } from '../contexts/authContext';
+import { api } from './apiLia/axiosClientSide';
+import { parseCookies } from 'nookies';
 
 
 export default function Home() {
@@ -12,6 +14,9 @@ export default function Home() {
   async function login({ email, password }) {
 
     await auth({ email, password });
+
+    const { token_lia } = parseCookies();
+    api.defaults.headers['authorization'] = `Bearer ${token_lia}`;
 
   }
 

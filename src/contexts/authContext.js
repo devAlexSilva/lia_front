@@ -22,7 +22,7 @@ export function AuthProvider({ children }) {
 
         })
 
-        setCookie(null, 'token-lia', token, {
+        setCookie(null, 'token_lia', token, {
             maxAge: 1800 // 30 minutos
         })
 
@@ -32,7 +32,7 @@ export function AuthProvider({ children }) {
     }
 
     async function cancelCookie(){
-        destroyCookie(null, 'token-lia');
+        destroyCookie(null, 'token_lia');
 
         Router.push('/');
     }
